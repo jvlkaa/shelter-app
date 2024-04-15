@@ -1,0 +1,129 @@
+## TESTING REQUESTS ##
+
+## 1) Pets
+### Get pets
+GET http://localhost:8088/dogs/pets
+
+### Get existing pet
+GET http://localhost:8088/dogs/pets/b5aa9e6a-06fb-4251-92f4-1fbec7b086d9
+
+### Get non-existing pet
+GET http://localhost:8088/dogs/pets/b6ab8b3a-06fb-4251-92f4-1fbec7b086d9
+
+### Get pets from existing breed
+GET http://localhost:8088/dogs/breeds/c2e57ca3-b1a9-4245-845a-29126c8239b4/pets
+
+### Get pets from non-existing breed
+GET http://localhost:8088/dogs/breeds/22222222-a222-2222-2222-22bd222222e2/pets
+
+### Get pets from empty category
+GET http://localhost:8088/dogs/breeds/76740f19-4409-492a-9bc5-e2879a788df0/pets
+
+### Create pet
+PUT http://localhost:8088/dogs/pets
+Content-Type: application/json
+
+{
+  "name": "Lucky",
+  "age": 13,
+  "breed": "23d9bfc5-a329-4053-b105-89bd903953e7"
+}
+
+### Create pet with non-existing breed
+PUT http://localhost:8088/dogs/pets
+Content-Type: application/json
+
+{
+  "name": "Lucky",
+  "age": 13,
+  "breed": "22222222-a329-4053-b105-89bd903953e7"
+}
+
+### Delete pet
+DELETE http://localhost:8088/dogs/pets/ba7bb36a-04fc-4657-01a7-3dbdc1b684d2
+
+### Update pet
+PATCH http://localhost:8088/dogs/pets/b5aa9e6a-06fb-4251-92f4-1fbec7b086d9
+Content-Type: application/json
+
+{
+  "name": "UpdateParis",
+  "age": 100
+}
+
+### Update non-existing pet
+PATCH http://localhost:8088/dogs/pets/bbbbbbbb-06fb-4251-92f4-1fbec7b086d9
+Content-Type: application/json
+
+{
+  "name": "UpdateParis",
+  "age": 100
+}
+
+
+### 2) Breed
+### Get breeds
+GET http://localhost:8088/dogs/breeds
+
+### Get existing breed
+GET http://localhost:8088/dogs/breeds/23d9bfc5-a329-4053-b105-89bd903953e7
+
+### Get non-existing breed
+GET http://localhost:8088/dogs/breeds/11aaaaaa-06fb-4251-92f4-1fbec7b086d9
+
+### Delete breed
+DELETE http://localhost:8088/dogs/breeds/23d9bfc5-a329-4053-b105-89bd903953e7
+
+### Create breed
+PUT http://localhost:8088/dogs/breeds
+Content-Type: application/json
+
+{
+  "name": "Wilczur",
+  "height": 70,
+  "pets": []
+}
+
+### Update breed
+PATCH http://localhost:8088/dogs/breeds/76740f19-4409-492a-9bc5-e2879a788df0
+Content-Type: application/json
+
+{
+  "name": "UpdateYork",
+  "height": 100
+}
+
+
+### Test 1:get pets(7), delete breed, get pets without pets of breed: Buldog(5)
+### Get pets
+GET http://localhost:8088/dogs/pets
+### Delete breed
+DELETE http://localhost:8088/dogs/breeds/23d9bfc5-a329-4053-b105-89bd903953e7
+
+
+###  Test2: Create breed, create pet of a previously created breed
+### Create breed
+PUT http://localhost:8088/dogs/breeds
+Content-Type: application/json
+
+{
+  "name": "Wilczur",
+  "height": 70,
+  "pets": []
+}
+
+### get breeds to copy ID of the created breed
+GET http://localhost:8088/dogs/breeds
+
+### Create pet
+PUT http://localhost:8088/dogs/pets
+Content-Type: application/json
+
+{
+  "name": "Lucky",
+  "age": 13,
+  "breed": "277fdb1c-a1fc-47a7-8bce-afdebb5249b7"
+}
+
+### Get pets
+GET http://localhost:8088/dogs/pets

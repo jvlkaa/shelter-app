@@ -1,0 +1,77 @@
+version: '3'
+
+services:
+  elements-dogs-db:
+    container_name: elements-dogs-db
+    image: postgres:16.1
+    restart: always
+    environment:
+      POSTGRES_USER: "elements-dogs"
+      POSTGRES_PASSWORD: "elements-dogs_password"
+      POSTGRES_DB: "elements-dogs_db"
+    volumes:
+      - elements-dogs-db:/var/lib/postgresql/data
+
+  categories-dogs-db:
+    container_name: categories-dogs-db
+    image: postgres:16.1
+    restart: always
+    environment:
+      POSTGRES_USER: "categories-dogs"
+      POSTGRES_PASSWORD: "categories-dogs_password"
+      POSTGRES_DB: "categories-dogs_db"
+    volumes:
+      - categories-dogs-db:/var/lib/postgresql/data
+
+  elements-dogs:
+    container_name: elements-dogs
+    build:
+      context: ./elements-dogs
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://elements-dogs-db:5432/elements-dogs_db"
+      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
+      SPRING_DATASOURCE_USERNAME: "elements-dogs"
+      SPRING_DATASOURCE_PASSWORD: "elements-dogs_password"
+      SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.PostgreSQLDialect"
+
+  categories-dogs:
+    container_name: categories-dogs
+    build:
+      context: ./categories-dogs
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      DOGS_PET_URL: "http://elements-dogs:8080"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://categories-dogs-db:5432/categories-dogs_db"
+      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
+      SPRING_DATASOURCE_USERNAME: "categories-dogs"
+      SPRING_DATASOURCE_PASSWORD: "categories-dogs_password"
+      SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.PostgreSQLDialect"
+
+  gateway-dogs:
+    container_name: gateway-dogs
+    build:
+      context: ./gateway-dogs
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      DOGS_GATEWAY_HOST: "gateway-dogs:8080"
+      DOGS_PET_URL: "http://elements-dogs:8080"
+      DOGS_BREED_URL: "http://categories-dogs:8080"
+
+  angular-app:
+    container_name: angular-app
+    build:
+      context: ./angular-app
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      DOGS_URL: "http://gateway-dogs:8080/dogs"
+    ports:
+      - "8089:80"
+  
+volumes:
+  elements-dogs-db:
+  categories-dogs-db:
