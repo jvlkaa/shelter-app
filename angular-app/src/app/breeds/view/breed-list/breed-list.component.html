@@ -1,0 +1,31 @@
+
+<div class="table">
+ <h2>Breeds</h2>
+  <table *ngIf="breeds" class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let breed of breeds.breeds">
+      <td class="name">{{breed.name}}</td>
+      <td>
+        <a [routerLink]="['/breeds', breed.uuid]">View</a>
+      </td>
+      <td>
+        <a [routerLink]="['/breeds', breed.uuid, 'edit']">Edit</a>
+      </td>
+      <td>
+        <button (click)="delete(breed)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br/>
+  <a class="create" [routerLink]="['/addbreed']">Create new breed</a>
+
+</div>

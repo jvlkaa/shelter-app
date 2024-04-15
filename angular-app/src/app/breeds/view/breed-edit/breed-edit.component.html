@@ -1,0 +1,20 @@
+<article *ngIf="breed">
+  <header><h2>Edit breed</h2></header>
+
+  <form class="container" (ngSubmit)="updateBreed()">
+    <div>
+      <label for="name">Name:</label>
+      <input id="name" name="name" [(ngModel)]="breed.name"/>
+    </div>
+
+    <div>
+      <label for="height">Height:</label>
+      <input id="height" name="height" [(ngModel)]="breed.height"/>
+    </div>
+
+    <button type="submit">Update</button>
+
+  </form>
+
+
+</article>

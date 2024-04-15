@@ -1,0 +1,36 @@
+<article *ngIf="breed">
+  <header><h2>{{breed.name}}</h2></header>
+  <div class = "info">
+    <h3>Height: {{breed.height}}</h3>
+    <br/>
+    <h3>Pets:</h3>
+    <table *ngIf="pets">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let pet of pets.pets">
+        <td class="name">{{pet.name}}</td>
+        <td>
+          <a [routerLink]="['/breeds', breed.uuid, 'pets', pet.uuid]">View</a>
+        </td>
+        <td>
+          <a [routerLink]="['/breeds', breed.uuid, 'pets', pet.uuid, 'edit']">Edit</a>
+        </td>
+        <td>
+          <button (click)="delete(pet)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <br/>
+    <a class="create" [routerLink]="['/breeds', breed.uuid, 'addpet']">Create new pet</a>
+
+
+  </div>
+</article>
