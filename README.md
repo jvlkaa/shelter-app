@@ -23,3 +23,9 @@ A student project written in Java that allows for basic management of a database
 5. Run docker compose using `docker-compose up`
 6. Open `localhost:8089` in your browser to see the application
 
+
+## Application view
+<img src="view/view1.png"  width="70%"/>
+<img src="view/view2.png"  width="70%"/>
+<img src="view/view3.png"  width="70%"/>
+<img src="view/view4.png"  width="70%"/>
